@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api-service:
+    image: node:14-alpine
+    container_name: api-service
+    restart: always
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - 3000:3000
+    command: yarn dev
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - APP_DB_NAME=deliveries_app
+    volumes:
+      - ./db:/var/lib/postgres/data
+    ports:
+      - 5432:5432
